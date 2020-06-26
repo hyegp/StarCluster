@@ -114,6 +114,20 @@ INSTANCE_TYPES = {
     't2.micro': ['i386', 'x86_64'],
     't2.small': ['i386', 'x86_64'],
     't2.medium': ['i386', 'x86_64'],
+    't3.nano': ['x86_64'],
+    't3.micro': ['x86_64'],
+    't3.small': ['x86_64'],
+    't3.medium': ['x86_64'],
+    't3.large': ['x86_64'],
+    't3.xlarge': ['x86_64'],
+    't3.2xlarge': ['x86_64'],
+    't3a.nano': ['x86_64'],
+    't3a.micro': ['x86_64'],
+    't3a.small': ['x86_64'],
+    't3a.medium': ['x86_64'],
+    't3a.large': ['x86_64'],
+    't3a.xlarge': ['x86_64'],
+    't3a.2xlarge': ['x86_64'],
     'm1.small': ['i386', 'x86_64'],
     'm1.medium': ['i386', 'x86_64'],
     'm1.large': ['x86_64'],
@@ -172,6 +186,10 @@ T1_INSTANCE_TYPES = ['t1.micro']
 
 T2_INSTANCE_TYPES = ['t2.nano', 't2.micro', 't2.small', 't2.medium']
 
+T3_INSTANCE_TYPES = ['t3.nano', 't3.micro', 't3.small', 't3.medium', 't3.large', 't3.xlarge', 't3.2xlarge']
+
+T3a_INSTANCE_TYPES = ['t3a.nano', 't3a.micro', 't3a.small', 't3a.medium', 't3a.large', 't3a.xlarge', 't3a.2xlarge']
+
 SEC_GEN_TYPES = ['m3.medium', 'm3.large', 'm3.xlarge', 'm3.2xlarge']
 
 CLUSTER_COMPUTE_TYPES = ['cc1.4xlarge', 'cc2.8xlarge']
@@ -200,12 +218,12 @@ DENSE_STORAGE_TYPES = ['d2.xlarge', 'd2.2xlarge', 'd2.4xlarge', 'd2.8xlarge']
 
 HVM_ONLY_TYPES = (CLUSTER_COMPUTE_TYPES + CLUSTER_GPU_TYPES +
                   CLUSTER_HIMEM_TYPES + I2_STORAGE_TYPES + HIMEM_TYPES +
-                  T2_INSTANCE_TYPES + DENSE_STORAGE_TYPES)
+                  T2_INSTANCE_TYPES + T3_INSTANCE_TYPES + T3a_INSTANCE_TYPES + DENSE_STORAGE_TYPES)
 
 HVM_TYPES = (HVM_ONLY_TYPES + HI_IO_TYPES + HI_STORAGE_TYPES + SEC_GEN_TYPES +
              M3_COMPUTE_TYPES + M4_COMPUTE_TYPES)
 
-EBS_ONLY_TYPES = T1_INSTANCE_TYPES + T2_INSTANCE_TYPES
+EBS_ONLY_TYPES = T1_INSTANCE_TYPES + T2_INSTANCE_TYPES + T3_INSTANCE_TYPES + T3a_INSTANCE_TYPES
 
 # Always make sure these match instances listed here:
 # http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/placement-groups.html
@@ -216,7 +234,7 @@ PLACEMENT_GROUP_TYPES = (M3_COMPUTE_TYPES + M4_COMPUTE_TYPES + HVM_ONLY_TYPES +
                          HI_IO_TYPES + HI_STORAGE_TYPES)
 # T2 instances are HVM_ONLY_TYPES however they're not compatible with placement
 # groups so remove them from the list
-for itype in T2_INSTANCE_TYPES:
+for itype in (T2_INSTANCE_TYPES + T3_INSTANCE_TYPES + T3a_INSTANCE_TYPES):
     PLACEMENT_GROUP_TYPES.remove(itype)
 
 # Only add a region to this list after testing that you can create and delete a
